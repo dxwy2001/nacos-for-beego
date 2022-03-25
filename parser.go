@@ -10,6 +10,7 @@ import (
 
 var (
 	bDQuote = []byte{'"'}
+	bEqual  = []byte{'='}
 )
 
 type Parser interface {
@@ -40,7 +41,7 @@ func (i IniParser) Parse(content string) (map[string]string, error) {
 		if bytes.Equal(row, []byte{}) || bytes.HasPrefix(row, []byte("#")) || bytes.HasPrefix(row, []byte(";")) {
 			continue
 		}
-		keyValue := bytes.SplitN(row, bDQuote, 2)
+		keyValue := bytes.SplitN(row, bEqual, 2)
 		key := string(bytes.TrimSpace(keyValue[0]))
 		key = strings.ToLower(key)
 
